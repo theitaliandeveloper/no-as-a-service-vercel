@@ -10,18 +10,6 @@ This tiny API returns random, generic, creative, and sometimes hilarious rejecti
 
 Built for humans, excuses, and humor.
 
-<!-- GitAds Sponsorship Badge -->
-<p align="center">
-  <a href="https://docs.gitads.dev/">
-    <img src="https://gitads.dev/assets/images/sponsor/camos/camo-3.png" alt="Sponsored by GitAds" />
-  </a>
-</p>
-
-<p align="center">
-  This project is <strong>sponsored by <a href="https://docs.gitads.dev/docs/getting-started/publishers">GitAds</a></strong>.<br>
-  You can get your GitHub repository sponsored too — <a href="https://docs.gitads.dev/docs/getting-started/publishers">create your account now</a>.
-</p>
-
 ---
 
 ## 🚀 API Usage
@@ -32,7 +20,6 @@ https://noasaservice.vercel.app/no
 ```
 
 **Method:** `GET`  
-**Rate Limit:** `120 requests per minute per IP`
 
 ### 🔄 Example Request
 ```http
@@ -62,7 +49,7 @@ Want to run it yourself? Just click the button below.
 
 ```
 no-as-service-vercel/
-├── api/index.js            # Express API
+├── api/no.js            # Express API
 ├── reasons.json        # 1000+ universal rejection reasons
 ├── package.json
 ├── .devcontainer.json  # VS Code / Github devcontainer setup
@@ -71,35 +58,6 @@ no-as-service-vercel/
 
 ---
 
-## 📦 package.json
-
-For reference, here’s the package config:
-
-```json
-{
-  "name": "no-as-service",
-  "version": "1.0.0",
-  "description": "A lightweight API that returns random rejection or no reasons.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "author": "hotheadhacker",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.18.2",
-    "express-rate-limit": "^7.0.0"
-  }
-}
-```
-
----
-
-## ⚓ Devcontainer
-
-If you open this repo in Github Codespaces, it will automatically use `.devcontainer.json` to set up your environment.  If you open it in VSCode, it will ask you if you want to reopen it in a container.
-
----
 ## Projects Using No-as-a-Service
 
 Here are some projects and websites that creatively integrate [no-as-a-service](https://naas.isalman.dev/no) to deliver humorous or programmatic "no" responses:
