@@ -1,35 +1,51 @@
-const express = require('express');
-const cors = require("cors");
-const rateLimit = require('express-rate-limit');
-const fs = require('fs');
+import fs from 'fs';
+import path from 'path';
 
-const app = express();
-app.use(cors());
-app.set('trust proxy', true);
-const PORT = process.env.PORT || 3000;
+// Load reasons once (cold start)
+const reasonsPath = path.join(process.cwd(), 'reasons.json');
+const reasons = JSON.parse(fs.readFileSync(reasonsPath, 'utf-8'));
 
-// Load reasons from JSON
-const reasons = JSON.parse(fs.readFileSync('./reasons.json', 'utf-8'));
+// Simple in-memory rate limiting (best effort)
+const RATE_LIMIT = 120;
+const WINDOW_MS = 60 * 1000;
+const ipHits = new Map();
 
-// Rate limiter: 120 requests per minute per IP
-const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 120,
-  keyGenerator: (req, res) => {
-    return req.headers['cf-connecting-ip'] || req.ip; // Fallback if header missing (or for non-CF)
-  },
-  message: { error: "Too many requests, please try again later. (120 reqs/min/IP)" }
-});
+function rateLimit(ip) {
+  const now = Date.now();
+  const data = ipHits.get(ip) || { count: 0, start: now };
 
-app.use(limiter);
+  if (now - data.start > WINDOW_MS) {
+    ipHits.set(ip, { count: 1, start: now });
+    return true;
+  }
 
-// Random rejection reason endpoint
-app.get('/no', (req, res) => {
+  if (data.count >= RATE_LIMIT) return false;
+
+  data.count++;
+  ipHits.set(ip, data);
+  return true;
+}
+
+export default function handler(req, res) {
+  // CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  const ip =
+    req.headers['cf-connecting-ip'] ||
+    req.headers['x-forwarded-for'] ||
+    'unknown';
+
+  if (!rateLimit(ip)) {
+    return res.status(429).json({
+      error: 'Too many requests, please try again later. (120 reqs/min/IP)',
+    });
+  }
+
   const reason = reasons[Math.floor(Math.random() * reasons.length)];
-  res.json({ reason });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`No-as-a-Service is running on port ${PORT}`);
-});
+  res.status(200).json({ reason });
+}
