@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/no",
+      "destination": "/api/no"
+    },
+    {
+      "source": "/",
+      "destination": "/api/no"
+    }
+  ]
+}
