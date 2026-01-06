@@ -6,10 +6,11 @@ const reasonsPath = path.join(process.cwd(), 'reasons.json');
 const reasons = JSON.parse(fs.readFileSync(reasonsPath, 'utf-8'));
 
 // Simple in-memory rate limiting (best effort)
-const RATE_LIMIT = 120;
-const WINDOW_MS = 60 * 1000;
-const ipHits = new Map();
+//const RATE_LIMIT = 120;
+//const WINDOW_MS = 60 * 1000;
+//const ipHits = new Map();
 
+/*
 function rateLimit(ip) {
   const now = Date.now();
   const data = ipHits.get(ip) || { count: 0, start: now };
@@ -24,7 +25,7 @@ function rateLimit(ip) {
   data.count++;
   ipHits.set(ip, data);
   return true;
-}
+}*/
 
 export default function handler(req, res) {
   // CORS
@@ -40,11 +41,11 @@ export default function handler(req, res) {
     req.headers['x-forwarded-for'] ||
     'unknown';
 
-  if (!rateLimit(ip)) {
+  /*if (!rateLimit(ip)) {
     return res.status(429).json({
       error: 'Too many requests, please try again later. (120 reqs/min/IP)',
     });
-  }
+  }*/
 
   const reason = reasons[Math.floor(Math.random() * reasons.length)];
   res.status(200).json({ reason });
