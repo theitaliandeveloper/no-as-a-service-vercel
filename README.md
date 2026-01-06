@@ -28,7 +28,7 @@ Built for humans, excuses, and humor.
 
 **Base URL**
 ```
-https://naas.isalman.dev/no
+https://noasaservice.vercel.app/no
 ```
 
 **Method:** `GET`  
@@ -50,43 +50,19 @@ Use it in apps, bots, landing pages, Slack integrations, rejection letters, or w
 
 ---
 
-## 🛠️ Self-Hosting
+## 🛠️ Deploy yourself on Vercel
 
-Want to run it yourself? It’s lightweight and simple.
+Want to run it yourself? Just click the button below.
 
-### 1. Clone this repository
-```bash
-git clone https://github.com/hotheadhacker/no-as-a-service.git
-cd no-as-a-service
-```
-
-### 2. Install dependencies
-```bash
-npm install
-```
-
-### 3. Start the server
-```bash
-npm start
-```
-
-The API will be live at:
-```
-http://localhost:3000/no
-```
-
-You can also change the port using an environment variable:
-```bash
-PORT=5000 npm start
-```
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/theitaliandeveloper/no-as-a-service-vercel)
 
 ---
 
 ## 📁 Project Structure
 
 ```
-no-as-service/
-├── index.js            # Express API
+no-as-service-vercel/
+├── api/index.js            # Express API
 ├── reasons.json        # 1000+ universal rejection reasons
 ├── package.json
 ├── .devcontainer.json  # VS Code / Github devcontainer setup
