@@ -1,4 +1,4 @@
-# ❌ No-as-a-Service
+# ❌ No-as-a-Service (Vercel Edition)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/hotheadhacker/no-as-a-service/main/assets/imgs/naas-with-no-logo-bunny.png" width="800" alt="No-as-a-Service Banner" width="70%"/>
